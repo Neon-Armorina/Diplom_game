@@ -56,7 +56,7 @@ namespace FSM.Player
             float t = jumpCounter / character.jumpTimer;
             float currentJumpM = character.jumpMultiplier;
 
-            if (Input.GetButtonUp(Jump))
+            if (Input.GetButtonUp(Jump) || !Input.GetButton(Jump))
             {
                 _isJumping = false;
                 jumpCounter = 0;

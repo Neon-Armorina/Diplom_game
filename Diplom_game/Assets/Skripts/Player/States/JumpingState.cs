@@ -10,9 +10,9 @@ namespace FSM.Player
         public JumpingState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
         
         private Vector2 _vecGravity = Vector2.zero;
-        private bool _isJumping = false;
-        private float jumpCounter;
-        
+        protected bool _isJumping = false;
+        protected float jumpCounter;
+
         private void JumpVoid()
         {
             character.rb.velocity = new Vector2 (character.rb.velocity.x, character.jumpForce);
@@ -28,6 +28,7 @@ namespace FSM.Player
             _isJumping = true;
 
             Debug.Log("STATE JUMP ENTER");
+            character.TriggerAnimation(_jumpParam);
             JumpVoid();
         }
 
@@ -35,11 +36,9 @@ namespace FSM.Player
         {
             base.LogicUpdate();
 
-            Debug.Log(_isJumping);
             if (character.rb.velocity.y <= 0)
             {
-                character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
-                character.CheckOnGround();
+                stateMachine.ChangeState(character.fallState);
             }
 
             if (character.onGround)
@@ -56,7 +55,7 @@ namespace FSM.Player
             float t = jumpCounter / character.jumpTimer;
             float currentJumpM = character.jumpMultiplier;
 
-            if (Input.GetButtonUp(Jump) || !Input.GetButton(Jump))
+            if ((Input.GetButtonUp(Jump) || !Input.GetButton(Jump)) && jumpCounter >= 0.1f)
             {
                 _isJumping = false;
                 jumpCounter = 0;
@@ -84,6 +83,7 @@ namespace FSM.Player
         public override void Exit()
         {
             base.Exit();
+            character.TriggerAnimation(_landParam);
             character.onGround = true;
             _isJumping = false;
         }

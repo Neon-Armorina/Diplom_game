@@ -8,17 +8,18 @@ namespace FSM.Player
     {
         #region Variables
 
-        [SerializeField] private Animator _anim;
+        public Animator anim;
+        public float jumpForce;
+        public float timeToCheckJumpBefore;
+        public float timeToCheckJumpAfter;
+        public float fallMultiplier;
+        public float jumpMultiplier;
+        public float jumpTimer;
+        public float moveSpeed;
+        public float climbSpeed;
+        public float slideSpeed;
         [SerializeField] private Collider _hitBox;
-        [SerializeField] public float jumpForce;
-        [SerializeField] public float fallMultiplier;
-        [SerializeField] public float jumpMultiplier;
-        [SerializeField] public float jumpTimer;
-        [SerializeField] public float moveSpeed;
-        [SerializeField] public float climbSpeed;
-        [SerializeField] public float slideSpeed;
         [SerializeField] private ContactFilter2D _whatIsGround;
-        [SerializeField] private ContactFilter2D _whatIsWall;
         [SerializeField] private Collider2D _groundFinder;
         [SerializeField] private Collider2D _wallFinder;
 
@@ -32,6 +33,9 @@ namespace FSM.Player
         public JumpingState jumpState;
         public ClimbingState climbState;
         public SlidingState slideState;
+        public FallState fallState;
+
+        private bool _faceright = true;
 
         #endregion
 
@@ -39,9 +43,21 @@ namespace FSM.Player
 
         public void Move(Vector2 vector2)
         {
-            transform.Translate(moveSpeed * vector2 * Time.deltaTime, Space.World);
+            if (vector2.x != 0)
+            {
+                transform.Translate(moveSpeed * vector2 * Time.deltaTime, Space.World);
+                Flip(vector2);
+            }            
         }
 
+        public void Flip(Vector2 vector2)
+        {
+            if ((vector2.x > 0 && !_faceright) || (vector2.x < 0 && _faceright))
+            {
+                transform.localScale *= new Vector2(-1, 1);
+                _faceright = !_faceright;
+            }
+        }
         public void ResetMoveParams()
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -54,12 +70,12 @@ namespace FSM.Player
 
         public void SetAnimationBool(int param, bool value)
         {
-            _anim.SetBool(param, value);
+            anim.SetBool(param, value);
         }
 
         public void TriggerAnimation(int param)
         {
-            _anim.SetTrigger(param);
+            anim.SetTrigger(param);
         }
 
         public void CheckOnGround()
@@ -69,13 +85,14 @@ namespace FSM.Player
             {
                 onGround = true;
             }
+            else { onGround = false; }
 
             return;
         }
         public void CheckOnWall()
         {
             Collider2D[] overlapCollliders = new Collider2D[4];
-            if (Physics2D.OverlapCollider(_wallFinder, _whatIsWall, overlapCollliders) > 0)
+            if (Physics2D.OverlapCollider(_wallFinder, _whatIsGround, overlapCollliders) > 0)
             {
                 Debug.Log("—“≈Õ¿");
                 return;
@@ -89,6 +106,7 @@ namespace FSM.Player
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            anim = GetComponent<Animator>();
             movementSM = new StateMachine();
 
             idleState = new IdleState(this, movementSM);

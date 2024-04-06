@@ -9,6 +9,12 @@ namespace FSM.Player
         public readonly string Horizontal = "Horizontal";
         public readonly string Jump = "Jump";
 
+        protected int _idleParam = Animator.StringToHash("Idle");
+        protected int _runParam = Animator.StringToHash("Run");
+        protected int _jumpParam = Animator.StringToHash("Jump");
+        protected int _landParam = Animator.StringToHash("Land");
+        protected int _isRunningParam = Animator.StringToHash("isRunning");
+
         protected Character character;
         protected StateMachine stateMachine;
 

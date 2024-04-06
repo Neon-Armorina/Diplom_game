@@ -12,6 +12,7 @@ namespace FSM.Player
         {
             base.Enter();
             Debug.Log("STATE IDLE ENTER");
+            character.TriggerAnimation(_idleParam);
         }
 
         public override void LogicUpdate()
@@ -20,6 +21,7 @@ namespace FSM.Player
             if (Input.GetAxisRaw(Horizontal) != 0 )
             {
                 stateMachine.ChangeState(character.runState);
+
             }
             else if (Input.GetButtonDown(Jump))
             {

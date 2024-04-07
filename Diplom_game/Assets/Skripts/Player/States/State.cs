@@ -14,6 +14,7 @@ namespace FSM.Player
         protected int _jumpParam = Animator.StringToHash("Jump");
         protected int _landParam = Animator.StringToHash("Land");
         protected int _isRunningParam = Animator.StringToHash("isRunning");
+        protected int _fallParam = Animator.StringToHash("Fall");
 
         protected Character character;
         protected StateMachine stateMachine;
@@ -41,7 +42,7 @@ namespace FSM.Player
 
         public virtual void LogicUpdate()
         {
-
+            Debug.Log(character.onGround + "   " + stateMachine.CurrentState);
         }
 
         public virtual void PhysicsUpdate() 

@@ -11,7 +11,6 @@ namespace FSM.Player
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("STATE IDLE ENTER");
             character.TriggerAnimation(_idleParam);
         }
 

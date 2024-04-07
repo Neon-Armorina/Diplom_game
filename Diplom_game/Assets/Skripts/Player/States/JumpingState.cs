@@ -59,7 +59,7 @@ namespace FSM.Player
             {
                 _isJumping = false;
                 jumpCounter = 0;
-                if (character.rb.velocity.y > 0)
+                if (character.rb.velocity.y > 0.01f)
                 {
                     character.rb.velocity = new Vector2(character.rb.velocity.x, character.rb.velocity.y * 0.6f);
                 }
@@ -83,8 +83,6 @@ namespace FSM.Player
         public override void Exit()
         {
             base.Exit();
-            character.TriggerAnimation(_landParam);
-            character.onGround = true;
             _isJumping = false;
         }
     }

@@ -9,19 +9,24 @@ namespace FSM.Player
         public RunState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
         private float _timerBeforeJump = 0f;
+        private int _animTrigger = 0;
 
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("STATE RUN ENTER");
-            character.TriggerAnimation(_runParam);
-            character.SetAnimationBool(_isRunningParam, true);
+
+            _animTrigger = 0;
+
+            if (character.onGround)
+            {
+                character.TriggerAnimation(_runParam);
+                character.SetAnimationBool(_isRunningParam, true);
+            }
         }
 
         public override void Exit() 
         { 
             base.Exit();
-            Debug.Log("STATE RUN EXIT");
             character.SetAnimationBool(_isRunningParam, false);
         }
 
@@ -29,10 +34,17 @@ namespace FSM.Player
         {
             base.LogicUpdate();
 
-//            if (Input.GetButtonDown(Jump))
-  //          {
- //               _timerBeforeJump += Time.deltaTime;
- //           }
+            if (_animTrigger == 0 && character.onGround)
+            {
+                _animTrigger = 1;
+            }
+
+            if (_animTrigger == 1) 
+            {
+                _animTrigger = 2;
+                character.TriggerAnimation(_runParam);
+                character.SetAnimationBool(_isRunningParam, true);
+            }
 
             if (Input.GetButtonDown(Jump) && character.onGround)
             {
@@ -44,6 +56,10 @@ namespace FSM.Player
         {
             base.PhysicsUpdate();
             character.CheckOnGround();
+            if (character.rb.velocity.x <= 0.01f && !Input.GetButton(Horizontal))
+            {
+                stateMachine.ChangeState(character.idleState);
+            }
         }
 
         public override void HandleInput()

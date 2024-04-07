@@ -111,6 +111,7 @@ namespace FSM.Player
 
             idleState = new IdleState(this, movementSM);
             runState = new RunState(this, movementSM);
+            fallState = new FallState(this, movementSM);
             jumpState = new JumpingState(this, movementSM);
             climbState = new ClimbingState(this, movementSM);
             slideState = new SlidingState(this, movementSM);

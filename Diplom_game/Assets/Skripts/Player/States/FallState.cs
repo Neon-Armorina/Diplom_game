@@ -20,23 +20,23 @@ namespace FSM.Player
         public override void Exit()
         {
             base.Exit();
-            character.TriggerAnimation(_landParam);
         }
 
         public override void LogicUpdate()
         {
             base .LogicUpdate();
-//            if (character.rb.velocity.y >= 0.1f)
-//            {
-//                character.rb.velocity -= _vecgravity * character.fallmultiplier * time.deltatime;
-//            }
+
             character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
-            character.CheckOnGround();
 
             if (character.onGround)
             {
+                character.TriggerAnimation(_landParam);
                 stateMachine.ChangeState(character.idleState);
             }
+        }
+        public override void HandleInput()
+        {
+            base.HandleInput();
         }
     }
 }

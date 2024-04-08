@@ -1,6 +1,6 @@
-using Unity.Burst;
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace FSM.Player
 {
@@ -18,24 +18,32 @@ namespace FSM.Player
         public float moveSpeed;
         public float climbSpeed;
         public float slideSpeed;
-        [SerializeField] private Collider _hitBox;
-        [SerializeField] private ContactFilter2D _whatIsGround;
-        [SerializeField] private Collider2D _groundFinder;
-        [SerializeField] private Collider2D _wallFinder;
-
         public Rigidbody2D rb;
-        public bool onGround;
-
-        public StateMachine movementSM;
-
-        public IdleState idleState;
-        public RunState runState;
-        public JumpingState jumpState;
-        public ClimbingState climbState;
-        public SlidingState slideState;
-        public FallState fallState;
 
         private bool _faceright = true;
+
+        [SerializeField] private Collider _hitBox;
+        [SerializeField] private ContactFilter2D _whatIsGround;
+        [SerializeField] private Transform _groundFinder;
+        [SerializeField] private Transform _wallFinder;
+
+        [NonSerialized] public bool onGround;
+        [NonSerialized] public bool onWall;
+        [NonSerialized] public int currentParam;
+        [NonSerialized] public bool _willJump = false;
+        [NonSerialized] public StateMachine movementSM;
+        [NonSerialized] public IdleState idleState;
+        [NonSerialized] public RunState runState;
+        [NonSerialized] public JumpingState jumpState;
+        [NonSerialized] public ClimbingState climbState;
+        [NonSerialized] public SlidingState slideState;
+        [NonSerialized] public FallState fallState;
+
+        protected IEnumerator _timeToJumpBefore(float time, bool NewValue)
+        {
+            yield return new WaitForSeconds(time);
+            _willJump = NewValue;
+        }
 
         #endregion
 
@@ -47,7 +55,7 @@ namespace FSM.Player
             {
                 transform.Translate(moveSpeed * vector2 * Time.deltaTime, Space.World);
                 Flip(vector2);
-            }            
+            }
         }
 
         public void Flip(Vector2 vector2)
@@ -57,10 +65,6 @@ namespace FSM.Player
                 transform.localScale *= new Vector2(-1, 1);
                 _faceright = !_faceright;
             }
-        }
-        public void ResetMoveParams()
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 
         public void ApplyImpulse(float force)
@@ -75,28 +79,14 @@ namespace FSM.Player
 
         public void TriggerAnimation(int param)
         {
+            if (param != Animator.StringToHash("Idle"))
+            {
+                foreach (AnimatorControllerParameter p in anim.parameters)
+                    if (p.type == AnimatorControllerParameterType.Trigger)
+                        anim.ResetTrigger(p.name);
+            }   
             anim.SetTrigger(param);
-        }
-
-        public void CheckOnGround()
-        {
-            Collider2D[] overlapCollliders = new Collider2D[4];
-            if (Physics2D.OverlapCollider(_groundFinder, _whatIsGround, overlapCollliders) > 0)
-            {
-                onGround = true;
-            }
-            else { onGround = false; }
-
-            return;
-        }
-        public void CheckOnWall()
-        {
-            Collider2D[] overlapCollliders = new Collider2D[4];
-            if (Physics2D.OverlapCollider(_wallFinder, _whatIsGround, overlapCollliders) > 0)
-            {
-                Debug.Log("—“≈Õ¿");
-                return;
-            }
+            currentParam = param;
         }
 
         #endregion
@@ -122,8 +112,17 @@ namespace FSM.Player
 
         private void Update()
         {
+            onGround = Physics2D.OverlapBox(_groundFinder.position, new Vector2(0.01f, 0.01f), 0, _whatIsGround.layerMask);
+            onWall = Physics2D.OverlapBox(_wallFinder.position, new Vector2(0.03f, 0.1f), 0, _whatIsGround.layerMask);
+
             movementSM.CurrentState.HandleInput();
             movementSM.CurrentState.LogicUpdate();
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                _willJump = true;
+                StartCoroutine(_timeToJumpBefore(timeToCheckJumpBefore, false));
+            }
         }
 
         private void FixedUpdate()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace FSM.Player
@@ -11,6 +12,7 @@ namespace FSM.Player
         public override void Enter()
         {
             base.Enter();
+
             character.TriggerAnimation(_idleParam);
         }
 
@@ -22,8 +24,10 @@ namespace FSM.Player
                 stateMachine.ChangeState(character.runState);
 
             }
-            else if (Input.GetButtonDown(Jump))
+            else if ((Input.GetButtonDown(Jump) || character._willJump == true) && character.onGround)
             {
+                character.onGround = false;
+                character._willJump = false;
                 stateMachine.ChangeState(character.jumpState);
             }
         }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace FSM.Player
@@ -6,20 +7,16 @@ namespace FSM.Player
     {
         public MoveState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
-        protected float speed;
-
         protected Vector2 horizontalInput;
 
         public override void Enter()
         {
             base.Enter();
-            horizontalInput.x = 0;
         }
 
         public override void Exit() 
         {
-           base.Exit(); 
-        character.ResetMoveParams();
+           base.Exit();
         }
 
         public override void HandleInput()
@@ -37,7 +34,7 @@ namespace FSM.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (horizontalInput.x == 0 && character.onGround)
+            if (horizontalInput.x == 0 && character.onGround && character.rb.velocity == Vector2.zero)
             {
                 stateMachine.ChangeState(character.idleState);
             }

@@ -27,7 +27,6 @@ namespace FSM.Player
             character.onGround = false;
             _isJumping = true;
 
-            Debug.Log("STATE JUMP ENTER");
             character.TriggerAnimation(_jumpParam);
             JumpVoid();
         }
@@ -41,7 +40,7 @@ namespace FSM.Player
                 stateMachine.ChangeState(character.fallState);
             }
 
-            if (character.onGround)
+            if (character.onGround && character.rb.velocity.y == 0)
             {
                 stateMachine.ChangeState(character.idleState);
             }

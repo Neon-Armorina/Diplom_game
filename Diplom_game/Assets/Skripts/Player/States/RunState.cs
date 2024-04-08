@@ -8,60 +8,47 @@ namespace FSM.Player
     {
         public RunState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
-        private float _timerBeforeJump = 0f;
-        private int _animTrigger = 0;
-
         public override void Enter()
         {
             base.Enter();
 
-            _animTrigger = 0;
-
-            if (character.onGround)
-            {
-                character.TriggerAnimation(_runParam);
-                character.SetAnimationBool(_isRunningParam, true);
-            }
+            character.TriggerAnimation(_runParam);
         }
 
         public override void Exit() 
         { 
             base.Exit();
-            character.SetAnimationBool(_isRunningParam, false);
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
 
-            if (_animTrigger == 0 && character.onGround)
+            if (character.rb.velocity.x <= 0.01f && !Input.GetButton(Horizontal))
             {
-                _animTrigger = 1;
+                stateMachine.ChangeState(character.idleState);
             }
 
-            if (_animTrigger == 1) 
+            if ((Input.GetButtonDown(Jump) || character._willJump == true) && character.onGround)
             {
-                _animTrigger = 2;
-                character.TriggerAnimation(_runParam);
-                character.SetAnimationBool(_isRunningParam, true);
-            }
-
-            if (Input.GetButtonDown(Jump) && character.onGround)
-            {
+                if (character._willJump == true)
+                {
+                    character._willJump = false;
+                }
                 stateMachine.ChangeState(character.jumpState);
+            }
+
+            if (character.rb.velocity.y < 0.1f && !character.onGround)
+            {
+                stateMachine.ChangeState(character.fallState);
             }
         }
 
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            character.CheckOnGround();
-            if (character.rb.velocity.x <= 0.01f && !Input.GetButton(Horizontal))
-            {
-                stateMachine.ChangeState(character.idleState);
-            }
         }
-
+        
         public override void HandleInput()
         {
             base.HandleInput();

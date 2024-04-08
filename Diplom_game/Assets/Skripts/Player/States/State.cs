@@ -1,9 +1,10 @@
+using Unity;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace FSM.Player
 {
-    public abstract class State 
+    public abstract class State : MonoBehaviour
     {
         public readonly string Vertical = "Vertical";
         public readonly string Horizontal = "Horizontal";
@@ -13,7 +14,6 @@ namespace FSM.Player
         protected int _runParam = Animator.StringToHash("Run");
         protected int _jumpParam = Animator.StringToHash("Jump");
         protected int _landParam = Animator.StringToHash("Land");
-        protected int _isRunningParam = Animator.StringToHash("isRunning");
         protected int _fallParam = Animator.StringToHash("Fall");
 
         protected Character character;
@@ -42,7 +42,7 @@ namespace FSM.Player
 
         public virtual void LogicUpdate()
         {
-            Debug.Log(character.onGround + "   " + stateMachine.CurrentState);
+            Debug.Log(character.onGround + "   " + character.onWall + "   " + stateMachine.CurrentState);
         }
 
         public virtual void PhysicsUpdate() 

@@ -2629,7 +2629,7 @@ MonoBehaviour:
   anim: {fileID: 694765045}
   jumpForce: 2
   timeToCheckJumpBefore: 0.3
-  timeToCheckJumpAfter: 0.3
+  timeToCheckJumpAfter: 0.2
   fallMultiplier: 0
   jumpMultiplier: 1
   jumpTimer: 0.4

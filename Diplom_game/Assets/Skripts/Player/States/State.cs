@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FSM.Player
 {
-    public abstract class State : MonoBehaviour
+    public abstract class State 
     {
         public readonly string Vertical = "Vertical";
         public readonly string Horizontal = "Horizontal";

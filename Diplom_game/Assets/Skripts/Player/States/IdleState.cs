@@ -24,10 +24,10 @@ namespace FSM.Player
                 stateMachine.ChangeState(character.runState);
 
             }
-            else if ((Input.GetButtonDown(Jump) || character._willJump == true) && character.onGround)
+            else if ((Input.GetButtonDown(Jump) || character.willJump == true) && character.onGround)
             {
                 character.onGround = false;
-                character._willJump = false;
+                character.willJump = false;
                 stateMachine.ChangeState(character.jumpState);
             }
         }

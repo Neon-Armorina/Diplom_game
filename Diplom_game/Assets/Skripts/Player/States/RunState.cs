@@ -29,17 +29,16 @@ namespace FSM.Player
                 stateMachine.ChangeState(character.idleState);
             }
 
-            if ((Input.GetButtonDown(Jump) || character._willJump == true) && character.onGround)
+            if ((Input.GetButtonDown(Jump) || character.willJump == true) && character.onGround)
             {
-                if (character._willJump == true)
-                {
-                    character._willJump = false;
-                }
+                character.willJump = false;
                 stateMachine.ChangeState(character.jumpState);
             }
 
-            if (character.rb.velocity.y < 0.1f && !character.onGround)
+            if (character.rb.velocity.y < -0.1f && !character.onGround)
             {
+                character.abstractGround = true;
+                character.StartCoroutine(character.timeNoGround(character.timeToCheckJumpAfter));
                 stateMachine.ChangeState(character.fallState);
             }
         }

@@ -23,6 +23,11 @@ namespace FSM.Player
         {
             base.HandleInput();
             horizontalInput.x = Input.GetAxisRaw(Horizontal);
+            if (Input.GetButtonDown(Jump))
+            {
+                character.willJump = true;
+                character.StartCoroutine(character.timeToJump(character.timeToCheckJumpBefore));
+            }
         }
 
         public override void PhysicsUpdate()

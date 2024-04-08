@@ -28,9 +28,9 @@ namespace FSM.Player
         [SerializeField] private Transform _wallFinder;
 
         [NonSerialized] public bool onGround;
+        [NonSerialized] public bool abstractGround;
         [NonSerialized] public bool onWall;
-        [NonSerialized] public int currentParam;
-        [NonSerialized] public bool _willJump = false;
+        [NonSerialized] public bool willJump = false;
         [NonSerialized] public StateMachine movementSM;
         [NonSerialized] public IdleState idleState;
         [NonSerialized] public RunState runState;
@@ -39,10 +39,16 @@ namespace FSM.Player
         [NonSerialized] public SlidingState slideState;
         [NonSerialized] public FallState fallState;
 
-        protected IEnumerator _timeToJumpBefore(float time, bool NewValue)
+        public IEnumerator timeToJump(float time)
         {
             yield return new WaitForSeconds(time);
-            _willJump = NewValue;
+            willJump = false;
+        }
+
+        public IEnumerator timeNoGround(float time)
+        {
+            yield return new WaitForSeconds(time);
+            abstractGround = false;
         }
 
         #endregion
@@ -86,7 +92,6 @@ namespace FSM.Player
                         anim.ResetTrigger(p.name);
             }   
             anim.SetTrigger(param);
-            currentParam = param;
         }
 
         #endregion
@@ -117,12 +122,6 @@ namespace FSM.Player
 
             movementSM.CurrentState.HandleInput();
             movementSM.CurrentState.LogicUpdate();
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                _willJump = true;
-                StartCoroutine(_timeToJumpBefore(timeToCheckJumpBefore, false));
-            }
         }
 
         private void FixedUpdate()

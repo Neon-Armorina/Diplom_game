@@ -26,7 +26,10 @@ namespace FSM.Player
         {
             base .LogicUpdate();
 
-            character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
+            if (character.abstractGround && Input.GetButtonDown(Jump))
+            {
+                stateMachine.ChangeState(character.jumpState);
+            }
 
             if (character.onGround)
             {
@@ -37,6 +40,12 @@ namespace FSM.Player
         public override void HandleInput()
         {
             base.HandleInput();
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+            character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
         }
     }
 }

@@ -11,11 +11,16 @@ namespace FSM.Player
         
         private Vector2 _vecGravity = Vector2.zero;
         protected bool _isJumping = false;
-        protected float jumpCounter;
+        public float jumpCounter;
 
         private void JumpVoid()
         {
             character.rb.velocity = new Vector2 (character.rb.velocity.x, character.jumpForce);
+        }
+
+        private void WallJumpVoid()
+        {
+            character.rb.velocity = new Vector2(-_horizontalInputBeforeJump.x * character.wallJumpForce.x, character.wallJumpForce.y);
         }
 
         public override void Enter()
@@ -26,9 +31,19 @@ namespace FSM.Player
             jumpCounter = 0;
             character.onGround = false;
             _isJumping = true;
-
+            character.ReserMoveVelocity();
             character.TriggerAnimation(_jumpParam);
-            JumpVoid();
+
+
+            if (character.jumpFromWall)
+            {
+                character.jumpFromWall = false;
+                WallJumpVoid();
+            }
+            else
+            {
+                JumpVoid();
+            }
         }
 
         public override void LogicUpdate()
@@ -73,8 +88,10 @@ namespace FSM.Player
                 {
                     currentJumpM = character.jumpMultiplier * (1 - t);
                 }
-
-                character.rb.velocity += _vecGravity * Time.deltaTime * currentJumpM;
+                if (character.rb.velocity.y < character.maxFallSpeed)
+                {
+                    character.rb.velocity += _vecGravity * Time.deltaTime * currentJumpM;
+                }
             }
 
         }

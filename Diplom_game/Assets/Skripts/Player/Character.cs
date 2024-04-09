@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.ComponentModel;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace FSM.Player
@@ -7,29 +9,36 @@ namespace FSM.Player
     public class Character : MonoBehaviour
     {
         #region Variables
-
-        public Animator anim;
+        
+        [Header("Jump and fall parameters")]
         public float jumpForce;
+        [Tooltip("Shows how far in advance the player can press the jump")]
         public float timeToCheckJumpBefore;
+        [Tooltip("Ûhows the time during which the player can jump after exiting the platform")]
         public float timeToCheckJumpAfter;
         public float fallMultiplier;
+        public float maxFallSpeed;
         public float jumpMultiplier;
+        [Tooltip("Displays how long player can hold jump to jump higher")]
         public float jumpTimer;
         public float moveSpeed;
-        public float climbSpeed;
         public float slideSpeed;
-        public Rigidbody2D rb;
+        public Vector2 wallJumpForce;
 
         private bool _faceright = true;
 
+        [Header("Required Components")]
+        public Animator anim;
+        public Rigidbody2D rb;
         [SerializeField] private Collider _hitBox;
-        [SerializeField] private ContactFilter2D _whatIsGround;
+        [SerializeField] private LayerMask _whatIsGround;
         [SerializeField] private Transform _groundFinder;
         [SerializeField] private Transform _wallFinder;
 
         [NonSerialized] public bool onGround;
         [NonSerialized] public bool abstractGround;
         [NonSerialized] public bool onWall;
+        [NonSerialized] public bool jumpFromWall = false;
         [NonSerialized] public bool willJump = false;
         [NonSerialized] public StateMachine movementSM;
         [NonSerialized] public IdleState idleState;
@@ -64,6 +73,11 @@ namespace FSM.Player
             }
         }
 
+        public void ReserMoveVelocity()
+        {
+            rb.velocity = Vector2.zero;
+        }
+
         public void Flip(Vector2 vector2)
         {
             if ((vector2.x > 0 && !_faceright) || (vector2.x < 0 && _faceright))
@@ -71,11 +85,6 @@ namespace FSM.Player
                 transform.localScale *= new Vector2(-1, 1);
                 _faceright = !_faceright;
             }
-        }
-
-        public void ApplyImpulse(float force)
-        {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, force), ForceMode2D.Impulse);
         }
 
         public void SetAnimationBool(int param, bool value)
@@ -117,8 +126,8 @@ namespace FSM.Player
 
         private void Update()
         {
-            onGround = Physics2D.OverlapBox(_groundFinder.position, new Vector2(0.01f, 0.01f), 0, _whatIsGround.layerMask);
-            onWall = Physics2D.OverlapBox(_wallFinder.position, new Vector2(0.03f, 0.1f), 0, _whatIsGround.layerMask);
+            onGround = Physics2D.OverlapBox(_groundFinder.position, new Vector2(0.01f, 0.01f), 0, _whatIsGround);
+            onWall = Physics2D.OverlapBox(_wallFinder.position, new Vector2(0.03f, 0.1f), 0, _whatIsGround);
 
             movementSM.CurrentState.HandleInput();
             movementSM.CurrentState.LogicUpdate();

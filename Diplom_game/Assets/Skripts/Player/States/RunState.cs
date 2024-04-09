@@ -12,6 +12,7 @@ namespace FSM.Player
         {
             base.Enter();
 
+            character.jumpFromWall = false;
             character.TriggerAnimation(_runParam);
         }
 
@@ -23,6 +24,8 @@ namespace FSM.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            character.TriggerAnimation(_runParam);
 
             if (character.rb.velocity.x <= 0.01f && !Input.GetButton(Horizontal))
             {

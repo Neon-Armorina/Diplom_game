@@ -9,11 +9,14 @@ namespace FSM.Player
         public FallState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
         private Vector2 _vecGravity = Vector2.zero;
+        private Vector2 _normalVelocity = Vector2.zero;
 
         public override void Enter()
         {
             base.Enter();
+
             _vecGravity = new Vector2(0, -Physics2D.gravity.y);
+            character.ReserMoveVelocity();
             character.TriggerAnimation(_fallParam);
         }
 
@@ -45,7 +48,10 @@ namespace FSM.Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
+            if (character.rb.velocity.y < character.maxFallSpeed)
+            {
+                character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
+            }
         }
     }
 }

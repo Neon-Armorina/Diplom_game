@@ -12,13 +12,15 @@ namespace FSM.Player
         public override void Enter()
         {
             base.Enter();
-
+            character.ReserMoveVelocity();
+            character.anim.ResetTrigger(_runParam);
             character.TriggerAnimation(_idleParam);
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+            character.TriggerAnimation(_idleParam);
             if (Input.GetAxisRaw(Horizontal) != 0 )
             {
                 stateMachine.ChangeState(character.runState);

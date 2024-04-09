@@ -15,6 +15,7 @@ namespace FSM.Player
         protected int _jumpParam = Animator.StringToHash("Jump");
         protected int _landParam = Animator.StringToHash("Land");
         protected int _fallParam = Animator.StringToHash("Fall");
+        protected int _slideParam = Animator.StringToHash("Slide");
 
         protected Character character;
         protected StateMachine stateMachine;
@@ -42,12 +43,12 @@ namespace FSM.Player
 
         public virtual void LogicUpdate()
         {
-            Debug.Log(character.onGround + "   " + character.onWall + "   " + stateMachine.CurrentState);
+            //Debug.LogFormat(character.onGround + "   " + character.onWall + "   " + stateMachine.CurrentState);
         }
 
         public virtual void PhysicsUpdate() 
-        { 
-            
+        {
+
         }
     }
 }

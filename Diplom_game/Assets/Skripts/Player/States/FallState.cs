@@ -29,10 +29,13 @@ namespace FSM.Player
         {
             base .LogicUpdate();
 
-            if (character.abstractGround && Input.GetButtonDown(Jump))
+            if (character.abstractGround && Input.GetButtonDown(Jump) && character.onWall)
             {
+                character.jumpFromWall = true;
                 stateMachine.ChangeState(character.jumpState);
             }
+            else if (character.abstractGround && Input.GetButtonDown(Jump))
+                stateMachine.ChangeState(character.jumpState);
 
             if (character.onGround)
             {
@@ -48,10 +51,9 @@ namespace FSM.Player
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            if (character.rb.velocity.y < character.maxFallSpeed)
-            {
+
+            if (character.rb.velocity.y < -character.maxFallSpeed)
                 character.rb.velocity -= _vecGravity * character.fallMultiplier * Time.deltaTime;
-            }
         }
     }
 }

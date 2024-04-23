@@ -41,9 +41,10 @@ namespace FSM.Player
                 character.TriggerAnimation(_landParam);
                 stateMachine.ChangeState(character.idleState);
             }
-            
-            if ((Input.GetButtonDown(Jump) || character.willJump))
+
+            if (Input.GetButtonDown(Jump) || character.willJump)
             {
+                character.willJump = false;
                 character.jumpFromWall = true;
                 stateMachine.ChangeState(character.jumpState);
             }

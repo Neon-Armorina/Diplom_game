@@ -10,12 +10,11 @@ namespace FSM.Player
         public JumpingState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
         
         private Vector2 _vecGravity = Vector2.zero;
-        protected bool _isJumping = false;
         public float jumpCounter;
 
         private void JumpVoid()
         {
-            character.rb.velocity = new Vector2 (character.rb.velocity.x, character.jumpForce);
+            character.rb.velocity = new Vector2(character.rb.velocity.x, character.jumpForce);
         }
 
         private void WallJumpVoid()
@@ -74,24 +73,20 @@ namespace FSM.Player
                 _isJumping = false;
                 jumpCounter = 0;
                 if (character.rb.velocity.y > 0.01f)
-                {
                     character.rb.velocity = new Vector2(character.rb.velocity.x, character.rb.velocity.y * 0.6f);
-                }
             }
 
             if (character.rb.velocity.y > 0 && _isJumping)
             {
                 jumpCounter += Time.deltaTime;
-                if (jumpCounter > character.jumpTimer) _isJumping = false;
+                if (jumpCounter > character.jumpTimer) 
+                    _isJumping = false;
 
-                if (t > 0.5f)
-                {
+                if (t > 0.5f) 
                     currentJumpM = character.jumpMultiplier * (1 - t);
-                }
-                if (character.rb.velocity.y < character.maxFallSpeed)
-                {
+
+                if (character.rb.velocity.y > -character.maxFallSpeed)
                     character.rb.velocity += _vecGravity * Time.deltaTime * currentJumpM;
-                }
             }
 
         }

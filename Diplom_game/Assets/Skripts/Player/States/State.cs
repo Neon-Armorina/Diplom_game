@@ -9,6 +9,7 @@ namespace FSM.Player
         public readonly string Vertical = "Vertical";
         public readonly string Horizontal = "Horizontal";
         public readonly string Jump = "Jump";
+        public readonly string Attack = "Attack";
 
         protected int _idleParam = Animator.StringToHash("Idle");
         protected int _runParam = Animator.StringToHash("Run");
@@ -16,6 +17,7 @@ namespace FSM.Player
         protected int _landParam = Animator.StringToHash("Land");
         protected int _fallParam = Animator.StringToHash("Fall");
         protected int _slideParam = Animator.StringToHash("Slide");
+        protected int _punchParam = Animator.StringToHash("Punch");
 
         protected Character character;
         protected StateMachine stateMachine;
@@ -43,7 +45,7 @@ namespace FSM.Player
 
         public virtual void LogicUpdate()
         {
-            //Debug.LogFormat(character.onGround + "   " + character.onWall + "   " + stateMachine.CurrentState);
+
         }
 
         public virtual void PhysicsUpdate() 

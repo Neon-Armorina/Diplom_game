@@ -25,18 +25,9 @@ namespace FSM.Player
         {
             base.LogicUpdate();
 
-            character.TriggerAnimation(_runParam);
-
             if (character.rb.velocity.x <= 0.01f && !Input.GetButton(Horizontal))
-            {
                 stateMachine.ChangeState(character.idleState);
-            }
 
-            if ((Input.GetButtonDown(Jump) || character.willJump == true) && character.onGround)
-            {
-                character.willJump = false;
-                stateMachine.ChangeState(character.jumpState);
-            }
 
             if (character.rb.velocity.y < -0.1f && !character.onGround)
             {

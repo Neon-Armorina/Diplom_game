@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace FSM.Player
 {
-    public class IdleState : State
+    public class IdleState : MoveState
     {
-        public IdleState(Character character,StateMachine stateMachine) : base(character, stateMachine) { }
+        public IdleState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
         public override void Enter()
         {
@@ -22,16 +22,13 @@ namespace FSM.Player
             base.LogicUpdate();
             character.TriggerAnimation(_idleParam);
             if (Input.GetAxisRaw(Horizontal) != 0 )
-            {
                 stateMachine.ChangeState(character.runState);
 
-            }
-            else if ((Input.GetButtonDown(Jump) || character.willJump == true) && character.onGround)
-            {
-                character.onGround = false;
-                character.willJump = false;
+            if (!character.onGround)
+                stateMachine.ChangeState(character.fallState);
+
+            if (Input.GetButtonDown(Jump) || character.willJump)
                 stateMachine.ChangeState(character.jumpState);
-            }
         }
     }
 }

@@ -15,7 +15,7 @@ TagManager:
   - BackGround
   - Decorations
   - ParallaxBackGround
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3154635265
     locked: 0

@@ -33,6 +33,9 @@
 		<relationship name="timeline">
 			<destination>{f0a56d8d-23ac-4f56-9105-def20c5d2619}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{da140a6e-7459-4e3e-94e2-003cc8b2694a}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{258ac2c5-b830-4f3c-878f-98f6981d96a6}">
 		<relationship name="masterBus">
@@ -366,7 +369,6 @@
 		<property name="name">
 			<value>Car Data</value>
 		</property>
-		<property name="value" />
 		<property name="dataType">
 			<value>0</value>
 		</property>
@@ -419,7 +421,7 @@
 			<value>Wind</value>
 		</property>
 		<property name="value">
-			<value>8</value>
+			<value>3.5</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -481,7 +483,7 @@
 			<value>GlobalGain</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>-0.5</value>
 		</property>
 		<property name="curve">
 			<value>{(-42.000000,-80.000000)(-39.000000,-60.000000)(-36.000000,-50.000000)(-32.000000,-40.000000)(-27.000000,-30.000000)(-20.000000,-20.000000)(-10.000000,-10.000000)(0.000000,0.000000)(10.000000,10.000000)}</value>
@@ -492,7 +494,7 @@
 			<value>GlobalSpeed</value>
 		</property>
 		<property name="value">
-			<value>40.5</value>
+			<value>10</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -674,7 +676,7 @@
 			<value>WhistlingLevel</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>-11</value>
 		</property>
 		<property name="curve">
 			<value>{(-42.000000,-80.000000)(-39.000000,-60.000000)(-36.000000,-50.000000)(-32.000000,-40.000000)(-27.000000,-30.000000)(-20.000000,-20.000000)(-10.000000,-10.000000)(0.000000,0.000000)(10.000000,10.000000)}</value>
@@ -685,7 +687,7 @@
 			<value>WhistlingShape</value>
 		</property>
 		<property name="value">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<property name="minimumValue">
 			<value>0</value>
@@ -765,7 +767,7 @@
 			<value>WhistlingLoCut</value>
 		</property>
 		<property name="value">
-			<value>50</value>
+			<value>1400</value>
 		</property>
 		<property name="curve">
 			<value>{(0.444444,50.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(9.500000,20000.000000)}</value>
@@ -776,7 +778,7 @@
 			<value>WhistlingHiCut</value>
 		</property>
 		<property name="value">
-			<value>6947</value>
+			<value>3200</value>
 		</property>
 		<property name="curve">
 			<value>{(0.444444,50.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(9.500000,20000.000000)}</value>
@@ -787,7 +789,7 @@
 			<value>WhistlingCoupl</value>
 		</property>
 		<property name="value">
-			<value>64</value>
+			<value>30</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -798,7 +800,7 @@
 			<value>GustsLevel</value>
 		</property>
 		<property name="value">
-			<value>-14.3000002</value>
+			<value>-18.5</value>
 		</property>
 		<property name="curve">
 			<value>{(-42.000000,-80.000000)(-39.000000,-60.000000)(-36.000000,-50.000000)(-32.000000,-40.000000)(-27.000000,-30.000000)(-20.000000,-20.000000)(-10.000000,-10.000000)(0.000000,0.000000)(10.000000,10.000000)}</value>
@@ -809,7 +811,7 @@
 			<value>GustsShape</value>
 		</property>
 		<property name="value">
-			<value>10</value>
+			<value>26</value>
 		</property>
 		<property name="minimumValue">
 			<value>0</value>
@@ -823,7 +825,7 @@
 			<value>GustsMax</value>
 		</property>
 		<property name="value">
-			<value>77</value>
+			<value>65</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -834,7 +836,7 @@
 			<value>GustsRate</value>
 		</property>
 		<property name="value">
-			<value>59</value>
+			<value>13.5</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -845,7 +847,7 @@
 			<value>GustsAttack</value>
 		</property>
 		<property name="value">
-			<value>48</value>
+			<value>22.5</value>
 		</property>
 		<property name="curve">
 			<value>{(0.000000,0.000000)(1.000000,100.000000)}</value>
@@ -867,7 +869,7 @@
 			<value>GustsLoCut</value>
 		</property>
 		<property name="value">
-			<value>50</value>
+			<value>1050</value>
 		</property>
 		<property name="curve">
 			<value>{(0.444444,50.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(9.500000,20000.000000)}</value>
@@ -900,7 +902,7 @@
 			<value>SquallsLevel</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>-12.5</value>
 		</property>
 		<property name="curve">
 			<value>{(-42.000000,-80.000000)(-39.000000,-60.000000)(-36.000000,-50.000000)(-32.000000,-40.000000)(-27.000000,-30.000000)(-20.000000,-20.000000)(-10.000000,-10.000000)(0.000000,0.000000)(10.000000,10.000000)}</value>
@@ -1002,7 +1004,7 @@
 			<value>LFECut</value>
 		</property>
 		<property name="value">
-			<value>145</value>
+			<value>86</value>
 		</property>
 		<property name="curve">
 			<value>{(0.111111,20.000000)(1.000000,100.000000)(2.000000,400.000000)}</value>

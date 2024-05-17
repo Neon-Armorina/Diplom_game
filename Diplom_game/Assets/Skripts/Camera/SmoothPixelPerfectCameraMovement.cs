@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.U2D;
 public class SmoothPixelPerfectCameraMovement : MonoBehaviour
 {
     private PixelPerfectCamera pcc;
-    private Camera camera;
+    [NonSerialized] public new Camera camera;
 
     private void OnValidate()
     {

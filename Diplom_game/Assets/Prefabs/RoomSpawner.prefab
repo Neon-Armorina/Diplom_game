@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7095493124975588701}
+  - component: {fileID: 1796158347500135869}
   m_Layer: 0
   m_Name: RoomSpawner
   m_TagString: Untagged
@@ -31,3 +32,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796158347500135869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130273991959102994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2040bf922536047b52139316f5a3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoint: {fileID: 2130273991959102994}
+  _player: {fileID: 7039722772032606629, guid: 700434bd14b5428419f96e77f99d3cdb, type: 3}
+  _roomList:
+  - {fileID: 3350682794110866530, guid: a8b4516642b0eaf47b227f7d1b0f4ba4, type: 3}
+  - {fileID: 3350682794110866530, guid: a06d7e0365e4ca24ba949f3808af70fb, type: 3}
+  - {fileID: 3350682794110866530, guid: 9b7e53bc02a85334dbc2a59b641dbb01, type: 3}
+  - {fileID: 3350682794110866530, guid: 94702a6876eb9db40a17a27e31915041, type: 3}
+  - {fileID: 3350682794110866530, guid: d62fdcdbd9eedbf43860ba35a354f32a, type: 3}
+  _spawnedRoomList: []

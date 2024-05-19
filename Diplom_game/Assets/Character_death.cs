@@ -9,14 +9,15 @@ public class Character_death : MonoBehaviour
     public static Character_death Instance;
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private TMP_Text FloorText;
+    [SerializeField] private GameObject fade;
 
     public void Awake()
     {
         Instance = this;
     }
 
-    public void Death()
+    private void OnDisable()
     {
-
+        fade.SetActive(true);
     }
 }

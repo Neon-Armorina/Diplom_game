@@ -13,6 +13,7 @@ namespace FSM.Player
         [Header("Move info")]
             public float moveSpeed;
             [NonSerialized] public bool faceright = true;
+            public GameObject spawnPoint;
 
         [Header("Jump info")]
             public float jumpForce;
@@ -192,6 +193,8 @@ namespace FSM.Player
             attackState = new AttackState(this, movementSM);
 
             movementSM.Initialize(idleState);
+
+            transform.position = spawnPoint.transform.position;
 
         }
 

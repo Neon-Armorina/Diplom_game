@@ -33,5 +33,7 @@ public class Character_Stats : MonoBehaviour
     {
         floor++;
         FloorText.text = "FLOOR: " + floor.ToString();
+        if (PlayerPrefs.GetInt("MaxFloor") < floor) 
+            PlayerPrefs.SetInt("MaxFloor", floor);
     }
 }

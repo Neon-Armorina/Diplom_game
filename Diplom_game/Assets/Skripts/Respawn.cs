@@ -5,19 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Respawn : MonoBehaviour
 {
-    public int scene = 2;
-
     private void Update()
     {
         if (Input.GetButtonDown("Reload"))
         {
             PlayerPrefs.Save();
-            SceneManager.LoadScene(scene);
+            SceneManager.LoadScene(PlayerPrefs.GetInt("level"));
         }
-    }
-
-    public void NextScene()
-    {
-        scene++;
     }
 }

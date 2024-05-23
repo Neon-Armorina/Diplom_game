@@ -10,8 +10,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            resp.NextScene();
-            PlayerPrefs.SetInt("level", 1);
+            PlayerPrefs.SetInt("level", 2);
             gameObject.SetActive(false);
         }
 

@@ -24,6 +24,7 @@ namespace FSM.Player
 
         public override void Enter()
         {
+            character.PlaySound(character.soundManager.PlayerJumpSound);
             base.Enter();
             _vecGravity = new Vector2(0, -Physics2D.gravity.y);
 

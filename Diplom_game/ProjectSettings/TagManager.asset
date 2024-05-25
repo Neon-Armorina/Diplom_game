@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coin
+  - Audio
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - ParallaxBackGround
   - Enemy
   - 
-  - 
+  - PostProcessing
   - 
   - 
   - 

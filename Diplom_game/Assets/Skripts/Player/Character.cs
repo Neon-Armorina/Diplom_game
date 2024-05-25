@@ -14,6 +14,7 @@ namespace FSM.Player
             public float moveSpeed;
             [NonSerialized] public bool faceright = true;
             public GameObject spawnPoint;
+            public float stepTimer;
 
         [Header("Jump info")]
             public float jumpForce;
@@ -25,7 +26,7 @@ namespace FSM.Player
             [Tooltip("Shows how far in advance the player can press the jump")]
             public float timeToCheckJumpBefore;
 
-            [Tooltip("Ûhows the time during which the player can jump after exiting the platform")]
+            [Tooltip("ï¿½hows the time during which the player can jump after exiting the platform")]
             public float timeToCheckJumpAfter;
 
 
@@ -64,6 +65,7 @@ namespace FSM.Player
             [SerializeField] private LayerMask _whatIsGround;
             [SerializeField] private Transform _groundFinder;
             [SerializeField] private Transform _wallFinder;
+            [NonSerialized] public SoundManager soundManager;
 
 
         [Header("States info")]
@@ -107,36 +109,6 @@ namespace FSM.Player
             Debug.Log("flip");
         }
 
-        public void LedgeClimbOver()
-        {
-            canClimb = false;
-            transform.position = climbOverPosition;
-            canGrabLedge = true;
-            anim.SetBool("canClimb", false);
-        }
-
-        public void CheckForLedge()
-        {
-            if(LedgeDetected && canGrabLedge)
-            {
-                canGrabLedge = false;
-
-                Vector2 ledgePosition = GetComponentInChildren<LedgeDetection>().transform.position;
-
-                climbBegunPosition = ledgePosition + _offset1;
-                climbOverPosition = ledgePosition + _offset2;
-
-                canClimb = true;
-            }
-
-            if (canClimb)
-            {
-                transform.position = climbBegunPosition;
-                anim.SetBool("canClimb", true);
-            }
-                
-        }
-
         public void ReserMoveVelocity()
         {
             rb.velocity = Vector2.zero;
@@ -168,14 +140,29 @@ namespace FSM.Player
             }
         }
 
+        public void PlaySound(AudioClip audio)
+        {
+            soundManager.PlaySFX(audio);
+        }
+
+        public void PlayStepSound()
+        {
+            soundManager.PlaySFX(soundManager.PlayerStepSound);
+        }
+
+        public void StopSound()
+        {
+            soundManager.StopSFX();
+        }
+
         #endregion
 
         #region Monobehaviour Callbacks
 
-        //private void OnDrawGizmos()
-        //{
-        //    Gizmos.DrawWireSphere(_punchPoint.position, _punchRadius);
-        //}
+        private void Awake()
+        {
+            soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
+        }
 
         private void Start()
         {
@@ -200,7 +187,7 @@ namespace FSM.Player
 
         private void Update()
         {
-            onGround = Physics2D.OverlapBox(_groundFinder.position, new Vector2(0.005f, 0.01f), 0, _whatIsGround);
+            onGround = Physics2D.OverlapBox(_groundFinder.position, new Vector2(0.0005f, 0.001f), 0, _whatIsGround);
             onWall = Physics2D.OverlapBox(_wallFinder.position, new Vector2(0.03f, 0.1f), 0, _whatIsGround);
 
             movementSM.CurrentState.HandleInput();
@@ -210,7 +197,6 @@ namespace FSM.Player
         private void FixedUpdate()
         {
             movementSM.CurrentState.PhysicsUpdate();
-            Debug.Log(LedgeDetected);
         }
 
         #endregion

@@ -55,7 +55,7 @@ namespace FSM.Player
         {
             base.LogicUpdate();
 
-            if (character.onWall && character.rb.velocity.y < 0 && horizontalInput.x != 0 && !_isJumping)
+            if (character.onWall && character.rb.velocity.y < 0 && horizontalInput.x != 0 && !_isJumping && stateMachine.CurrentState != character.slideState)
                 stateMachine.ChangeState(character.slideState);
 
             if (Input.GetButtonDown(Attack) && character.onGround)

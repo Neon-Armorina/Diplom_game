@@ -14,7 +14,9 @@ namespace FSM.Player
         public override void Enter()
         {
             base.Enter();
-            
+
+            Debug.Log("SLIDE");
+            character.PlaySound(character.soundManager.PlayerSlideSound);
             _freezedX = character.rb.position.x;
             _horizontalInputBeforeJump = horizontalInput;
             character.ReserMoveVelocity();
@@ -24,8 +26,9 @@ namespace FSM.Player
 
         public override void Exit() 
         { 
-            base.Exit(); 
+            base.Exit();
 
+            character.StopSound();
             character.TriggerAnimation(_landParam);
             character.rb.velocity = new Vector2(character.rb.velocity.x, _normalVelocity.y);
         }

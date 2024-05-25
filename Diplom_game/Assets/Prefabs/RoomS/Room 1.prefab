@@ -537,15 +537,15 @@ CompositeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
+  m_OffsetDistance: 0
+  m_UseDelaunayMesh: 1
   m_CompositeGameObject: {fileID: 3137806483050448519}
 --- !u!1 &4577454577212905128
 GameObject:

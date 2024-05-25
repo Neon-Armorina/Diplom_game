@@ -8,6 +8,5 @@ namespace FSM.Player
     {
         public OnWallState(Character character, StateMachine stateMachine) : base(character,stateMachine) { }
 
-
     }
 }

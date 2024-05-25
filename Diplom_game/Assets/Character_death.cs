@@ -18,6 +18,7 @@ public class Character_death : MonoBehaviour
 
     private void OnDisable()
     {
-        fade.SetActive(true);
+        if (fade != null)
+            fade.SetActive(true);
     }
 }

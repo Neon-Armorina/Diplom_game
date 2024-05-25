@@ -8,10 +8,13 @@ namespace FSM.Player
     {
         public RunState(Character character, StateMachine stateMachine) : base(character, stateMachine) { }
 
+        public float timerDown = 0;
+
         public override void Enter()
         {
             base.Enter();
 
+            timerDown = character.stepTimer;
             character.jumpFromWall = false;
             character.TriggerAnimation(_runParam);
         }

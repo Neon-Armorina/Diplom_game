@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Coin_collectable : MonoBehaviour
 {
-    public int coinValue;
+    public int coinValue = 1;
+
+    private SoundManager soundManager;
+
+    private void Awake()
+    {
+        soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
+    }
 
     public void Start()
     {
@@ -16,6 +23,7 @@ public class Coin_collectable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Character_Stats.Instance.AddCoin(coinValue);
+            soundManager.PlayUISFX(soundManager.CoinPickup);
             Destroy(gameObject);
         }
 
